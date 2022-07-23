@@ -16,6 +16,9 @@
         android:theme="@style/Theme.Java_al_quran_app"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".view.AyatRoomActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.AyatActivity"
             android:exported="false" />
         <activity

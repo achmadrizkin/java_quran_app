@@ -38,7 +38,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 @AndroidEntryPoint
 public class AyatActivity extends AppCompatActivity {
     private ActivityAyatBinding activityAyatBinding;
-    private String id;
+    private String id, name;
     private CompositeDisposable compositeDisposable;
     private AyatViewModel ayatViewModel;
     private ListAyatAdapter listAyatAdapter;
@@ -53,9 +53,11 @@ public class AyatActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
+        name = intent.getStringExtra("name");
 
         //
         activityAyatBinding.setIsLoading(true);
+        activityAyatBinding.setName(name);
 
         //
         setupViewModel();

@@ -4,18 +4,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkRequest;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.example.java_al_quran_app.R;
 import com.example.java_al_quran_app.adapter.ListSuratAdapter;
+import com.example.java_al_quran_app.data.local.entities.ListAyatEntities;
 import com.example.java_al_quran_app.data.local.entities.ListSuratEntities;
+import com.example.java_al_quran_app.data.network.Ayat;
 import com.example.java_al_quran_app.data.network.Surat;
 import com.example.java_al_quran_app.databinding.ActivityMainBinding;
+import com.example.java_al_quran_app.view_model.AyatViewModel;
 import com.example.java_al_quran_app.view_model.MainViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -37,8 +42,9 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding activityMainBinding;
-    private CompositeDisposable compositeDisposable, compositeDisposableListSurahDB;
+    private CompositeDisposable compositeDisposable, compositeDisposableListSurahDB, compositeDisposableListAyat;
     private MainViewModel mainViewModel;
+    private AyatViewModel ayatViewModel;
     private ArrayList<Surat> listSuratData;
     ListSuratAdapter listSuratAdapter;
 
@@ -55,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         activityMainBinding = DataBindingUtil.setContentView(MainActivity.this, R.layout.activity_main);
         compositeDisposable = new CompositeDisposable();
         compositeDisposableListSurahDB = new CompositeDisposable();
+        compositeDisposableListAyat = new CompositeDisposable();
 
         // setup view model
         setupViewModel();
@@ -74,10 +81,21 @@ public class MainActivity extends AppCompatActivity {
 
         // room
         getListSuratFromDB();
+        getListAyatFromDB();
+
+        //
+        activityMainBinding.clRecentlyRead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MainActivity.this, AyatRoomActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
     private void setupViewModel() {
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        ayatViewModel = new ViewModelProvider(this).get(AyatViewModel.class);
     }
 
 
@@ -135,6 +153,22 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
+    private void getListAyatFromDB() {
+        Disposable disposable = ayatViewModel.getListAyatFromDB()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ListAyatEntities>() {
+                    @Override
+                    public void accept(ListAyatEntities listAyatEntities) throws Throwable {
+                        activityMainBinding.setRecentlyAr(listAyatEntities.getListAyat().get(0).getAr());
+                        activityMainBinding.setRecentlyTerjemahan(listAyatEntities.getListAyat().get(0).getId());
+                    }
+                });
+
+        compositeDisposableListAyat.add(disposable);
+    }
+
+
     private void getListSuratFromDB() {
         Disposable disposable = mainViewModel.getAllListSuratFromDB()
                 .subscribeOn(Schedulers.io())
@@ -177,6 +211,7 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         compositeDisposable.clear();
         compositeDisposableListSurahDB.clear();
+        compositeDisposableListAyat.clear();
     }
 
     private void checkBuild(ConnectivityManager.NetworkCallback networkCallback) {

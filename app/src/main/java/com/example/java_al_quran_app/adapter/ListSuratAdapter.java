@@ -71,6 +71,7 @@ public class ListSuratAdapter extends RecyclerView.Adapter<ListSuratAdapter.List
                 public void onClick(View view) {
                     Intent i = new Intent(view.getContext(), AyatActivity.class);
                     i.putExtra("id", dataItem.getNomor());
+                    i.putExtra("name", dataItem.getNama());
                     listItemSurahBinding.cvSurah.getContext().startActivity(i);
                 }
             });
