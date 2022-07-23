@@ -1,6 +1,7 @@
 package com.example.java_al_quran_app.hilt.network;
 
 import com.example.java_al_quran_app.data.local.RoomDao;
+import com.example.java_al_quran_app.repo.AyatRepo;
 import com.example.java_al_quran_app.repo.MainRepo;
 import com.example.java_al_quran_app.service.RetroService;
 
@@ -24,7 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 @InstallIn(SingletonComponent.class)
 public class HiltNetworkModule {
-    String BASE_URL = "https://al-quran-8d642.firebaseio.com/";
+    String BASE_URL = "https://api.npoint.io/99c279bb173a6e28359c/";
 
     @Provides
     @Singleton
@@ -63,5 +64,11 @@ public class HiltNetworkModule {
     @Singleton
     MainRepo mainRepository(RetroService requestApi, RoomDao roomDao) {
         return new MainRepo(requestApi, roomDao);
+    }
+
+    @Provides
+    @Singleton
+    AyatRepo ayatRepo(RetroService requestApi, RoomDao roomDao) {
+        return new AyatRepo(requestApi, roomDao);
     }
 }

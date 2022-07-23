@@ -2,7 +2,7 @@ package com.example.java_al_quran_app.data.network;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ListAyat {
+public class Ayat {
     @SerializedName("ar")
     private String ar;
 

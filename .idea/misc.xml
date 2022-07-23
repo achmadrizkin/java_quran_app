@@ -4,8 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Rizki/.JAVA/java_al_quran_app/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.125" />
+        <entry key="..\:/Rizki/.JAVA/java_al_quran_app/app/src/main/res/drawable/bg_circle.xml" value="0.125" />
         <entry key="..\:/Rizki/.JAVA/java_al_quran_app/app/src/main/res/drawable/ic_bg_row.xml" value="0.125" />
-        <entry key="..\:/Rizki/.JAVA/java_al_quran_app/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Rizki/.JAVA/java_al_quran_app/app/src/main/res/layout/activity_ayat.xml" value="0.18" />
+        <entry key="..\:/Rizki/.JAVA/java_al_quran_app/app/src/main/res/layout/activity_list_ayat.xml" value="0.12894736842105264" />
+        <entry key="..\:/Rizki/.JAVA/java_al_quran_app/app/src/main/res/layout/activity_main.xml" value="0.14" />
+        <entry key="..\:/Rizki/.JAVA/java_al_quran_app/app/src/main/res/layout/list_item_ayat.xml" value="0.2" />
         <entry key="..\:/Rizki/.JAVA/java_al_quran_app/app/src/main/res/layout/list_item_surah.xml" value="0.22" />
       </map>
     </option>

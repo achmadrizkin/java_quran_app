@@ -1,6 +1,8 @@
 package com.example.java_al_quran_app.adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -10,9 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.java_al_quran_app.R;
 import com.example.java_al_quran_app.data.network.Surat;
 import com.example.java_al_quran_app.databinding.ListItemSurahBinding;
+import com.example.java_al_quran_app.view.AyatActivity;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ListSuratAdapter extends RecyclerView.Adapter<ListSuratAdapter.ListSuratViewHolder> {
     LayoutInflater layoutInflater;
@@ -62,6 +64,16 @@ public class ListSuratAdapter extends RecyclerView.Adapter<ListSuratAdapter.List
             listItemSurahBinding.tvAyat.setText(dataItem.getNama());
             listItemSurahBinding.tvName.setText(dataItem.getUrut());
             listItemSurahBinding.tvInfo.setText(dataItem.getType() + " - " + dataItem.getAyat());
+
+            // pass intent
+            listItemSurahBinding.cvSurah.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(view.getContext(), AyatActivity.class);
+                    i.putExtra("id", dataItem.getNomor());
+                    listItemSurahBinding.cvSurah.getContext().startActivity(i);
+                }
+            });
         }
     }
 }
