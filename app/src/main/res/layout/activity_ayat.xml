@@ -9,6 +9,12 @@
             name="name"
             type="String" />
 
+        <variable
+            name="isLoading"
+            type="Boolean" />
+
+        <import type="android.view.View"/>
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -51,14 +57,26 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvAyat"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/_50sdp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout6"
-            tools:listitem="@layout/list_item_surah" />
+            tools:listitem="@layout/list_item_ayat" />
 
+
+        <ProgressBar
+            android:visibility="@{isLoading ? View.VISIBLE : View.GONE}"
+            android:id="@+id/pbLoading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

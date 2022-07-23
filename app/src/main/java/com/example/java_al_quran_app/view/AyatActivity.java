@@ -13,13 +13,15 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.java_al_quran_app.R;
+import com.example.java_al_quran_app.adapter.ListAyatAdapter;
+import com.example.java_al_quran_app.adapter.ListSuratAdapter;
 import com.example.java_al_quran_app.data.network.Ayat;
 import com.example.java_al_quran_app.data.network.Surat;
 import com.example.java_al_quran_app.databinding.ActivityAyatBinding;
 import com.example.java_al_quran_app.view_model.AyatViewModel;
-import com.example.java_al_quran_app.view_model.MainViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -39,30 +41,27 @@ public class AyatActivity extends AppCompatActivity {
     private String id;
     private CompositeDisposable compositeDisposable;
     private AyatViewModel ayatViewModel;
-
-    @Inject
-    ConnectivityManager connectivityManager;
-
-    @Inject
-    NetworkRequest networkRequest;
+    private ListAyatAdapter listAyatAdapter;
+    private ArrayList<Ayat> listAyatData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityAyatBinding = DataBindingUtil.setContentView(AyatActivity.this, R.layout.activity_ayat);
         compositeDisposable = new CompositeDisposable();
+        listAyatData = new ArrayList<>();
 
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
 
         //
-        checkConnection();
+        activityAyatBinding.setIsLoading(true);
 
         //
         setupViewModel();
 
         // call api
-        callListAyatByIdFromAPI("1");
+        callListAyatByIdFromAPI(id);
     }
 
     private void setupViewModel() {
@@ -81,12 +80,14 @@ public class AyatActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onNext(@NonNull List<Ayat> listSurat) {
+                    public void onNext(@NonNull List<Ayat> listAyat) {
                         Log.e("TAG", "------------ TEST API CALL --------------");
-                        Log.e("TAG", "On Next" + listSurat.get(0).getAr());
-                        Log.e("TAG", "On Next" + listSurat.get(1).getAr());
-                        Log.e("TAG", "On Next" + listSurat.get(2).getAr());
-                        Log.e("TAG", "On Next" + listSurat.get(3).getAr());
+                        Log.e("TAG", "On Next" + listAyat.get(0).getAr());
+                        Log.e("TAG", "On Next" + listAyat.get(1).getAr());
+                        Log.e("TAG", "On Next" + listAyat.get(2).getAr());
+                        Log.e("TAG", "On Next" + listAyat.get(3).getAr());
+
+                        listAyatData.addAll(listAyat);
                     }
 
                     @Override
@@ -97,35 +98,18 @@ public class AyatActivity extends AppCompatActivity {
                     @Override
                     public void onComplete() {
                         Log.e("TAG", "Compleated");
+
+                        // show adapter
+                        activityAyatBinding.setIsLoading(false);
+                        if (activityAyatBinding.rvAyat.getAdapter() != null) {
+                            listAyatAdapter = (ListAyatAdapter) activityAyatBinding.rvAyat.getAdapter();
+                            listAyatAdapter.updateData(listAyatData);
+                        } else {
+                            listAyatAdapter = new ListAyatAdapter(listAyatData);
+                            activityAyatBinding.rvAyat.setAdapter(listAyatAdapter);
+                        }
                     }
                 });
-    }
-
-
-    private void checkConnection() {
-        ConnectivityManager.NetworkCallback networkCallback = new ConnectivityManager.NetworkCallback() {
-            @Override
-            public void onAvailable(@androidx.annotation.NonNull Network network) {
-                super.onAvailable(network);
-            }
-
-            @Override
-            public void onLost(@androidx.annotation.NonNull Network network) {
-                super.onLost(network);
-                Snackbar.make(activityAyatBinding.clAyat, "Internet Connection Lost", 2000).show();
-            }
-        };
-
-        // check build
-        checkBuild(networkCallback);
-    }
-
-    private void checkBuild(ConnectivityManager.NetworkCallback networkCallback) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            connectivityManager.registerDefaultNetworkCallback(networkCallback);
-        } else {
-            connectivityManager.registerNetworkCallback(networkRequest, networkCallback);
-        }
     }
 
 

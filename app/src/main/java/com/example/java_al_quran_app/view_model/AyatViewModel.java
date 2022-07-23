@@ -6,9 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
 import com.example.java_al_quran_app.data.network.Ayat;
-import com.example.java_al_quran_app.data.network.Surat;
 import com.example.java_al_quran_app.repo.AyatRepo;
-import com.example.java_al_quran_app.repo.MainRepo;
 
 import java.util.List;
 import java.util.concurrent.Future;
