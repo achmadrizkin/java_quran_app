@@ -5,12 +5,10 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
-import com.example.java_al_quran_app.data.local.ListSuratModel;
 import com.example.java_al_quran_app.data.local.entities.ListSuratEntities;
 import com.example.java_al_quran_app.data.network.Surat;
 import com.example.java_al_quran_app.repo.MainRepo;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Future;
 

@@ -1,5 +1,6 @@
 package com.example.java_al_quran_app.hilt.network;
 
+import com.example.java_al_quran_app.data.local.ListAyatRoomDao;
 import com.example.java_al_quran_app.data.local.RoomDao;
 import com.example.java_al_quran_app.repo.AyatRepo;
 import com.example.java_al_quran_app.repo.MainRepo;
@@ -68,7 +69,7 @@ public class HiltNetworkModule {
 
     @Provides
     @Singleton
-    AyatRepo ayatRepo(RetroService requestApi, RoomDao roomDao) {
-        return new AyatRepo(requestApi, roomDao);
+    AyatRepo ayatRepo(RetroService requestApi, ListAyatRoomDao listAyatRoomDao) {
+        return new AyatRepo(requestApi, listAyatRoomDao);
     }
 }

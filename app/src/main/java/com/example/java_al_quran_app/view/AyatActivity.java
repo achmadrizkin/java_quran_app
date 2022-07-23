@@ -87,6 +87,10 @@ public class AyatActivity extends AppCompatActivity {
                         Log.e("TAG", "On Next" + listAyat.get(2).getAr());
                         Log.e("TAG", "On Next" + listAyat.get(3).getAr());
 
+                        // insert to database -> recenly read (support offline)
+                        ayatViewModel.insertListAyatToDB(listAyat);
+
+                        // add data from API
                         listAyatData.addAll(listAyat);
                     }
 

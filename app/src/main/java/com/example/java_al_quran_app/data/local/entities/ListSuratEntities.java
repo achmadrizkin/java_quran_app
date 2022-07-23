@@ -4,10 +4,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.example.java_al_quran_app.data.local.ListSuratModel;
 import com.example.java_al_quran_app.data.network.Surat;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity(tableName = "listSurat")

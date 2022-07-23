@@ -6,16 +6,15 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.example.java_al_quran_app.data.local.entities.ListAyatEntities;
-import com.example.java_al_quran_app.data.local.entities.ListSuratEntities;
 
 import io.reactivex.rxjava3.core.Flowable;
 
 @Dao
-public interface RoomDao {
+public interface ListAyatRoomDao {
     // insert list surat to database
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertListSuratToDB(ListSuratEntities listSurat);
+    void insertListAyatToDB(ListAyatEntities listAyatEntities);
 
-    @Query("SELECT * FROM listSurat")
-    Flowable<ListSuratEntities> getListSuratFromDB();
+    @Query("SELECT * FROM listAyat")
+    Flowable<ListAyatEntities> getListAyatFromDB();
 }

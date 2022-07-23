@@ -2,13 +2,11 @@ package com.example.java_al_quran_app.repo;
 
 import android.util.Log;
 
-import com.example.java_al_quran_app.data.local.ListSuratModel;
 import com.example.java_al_quran_app.data.local.RoomDao;
 import com.example.java_al_quran_app.data.local.entities.ListSuratEntities;
 import com.example.java_al_quran_app.data.network.Surat;
 import com.example.java_al_quran_app.service.RetroService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -91,6 +89,7 @@ public class MainRepo {
 
             @Override
             public void onComplete() {
+                Log.e("insertListSurat", "------------------ INSERT LIST SURAT DATABASE SUCCESS ------------------");
                 Log.e("insertListSurat", "onComplete: OK");
             }
 
